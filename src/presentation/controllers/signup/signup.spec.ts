@@ -2,17 +2,21 @@ import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest } from '../helpers/http-helper'
 import { SignUpController } from './signup'
 
-class EmailValidatorStub {
-  async isValid (email: string): Promise<boolean> {
-    return await new Promise((resolve) => { resolve(true) })
+const makeEmailValidator = (): any => {
+  class EmailValidatorStub {
+    async isValid (email: string): Promise<boolean> {
+      return await new Promise((resolve) => { resolve(true) })
+    }
   }
+  return new EmailValidatorStub()
 }
-const emailValidatorStub = new EmailValidatorStub()
 
 const makeSut = (): any => {
+  const emailValidatorStub = makeEmailValidator()
   const sut = new SignUpController(emailValidatorStub)
   return {
-    sut
+    sut,
+    emailValidatorStub
   }
 }
 
@@ -70,8 +74,8 @@ describe('SignUp Controller', () => {
   })
 
   test('Should return 400 if invalid email is provided', async () => {
+    const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(new Promise((resolve) => { resolve(false) }))
-    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
