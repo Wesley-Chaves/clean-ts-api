@@ -17,6 +17,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.1",
     "@commitlint/config-conventional": "^18.4.0",
+    "@types/bcrypt": "^5.0.2",
     "@types/jest": "^29.5.8",
     "@types/node": "^20.9.0",
     "@types/validator": "^13.11.6",
@@ -27,5 +28,8 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2",
     "validator": "^13.11.0"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1"
   }
 }
