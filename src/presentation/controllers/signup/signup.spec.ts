@@ -1,10 +1,8 @@
-import { Account } from '../../../domain/models/account'
-import { AddAccount, AddAccountModel } from '../../../domain/usecases/add-account'
-import { HttpRequest } from '../../protocols'
-import { EmailValidator } from '../../protocols/emailValidator'
-import { InvalidParamError, MissingParamError } from '../errors'
-import { badRequest, serverError } from '../helpers/http-helper'
 import { SignUpController } from './signup'
+import { badRequest, serverError } from '../helpers/http-helper'
+import { InvalidParamError, MissingParamError } from '../errors'
+import { HttpRequest, AddAccountModel, Account, AddAccount, EmailValidator }
+  from './signup-protocols'
 
 const makeFakeRequest = ({ name = 'any_name', email = 'any_email@mail.com', password = 'any_password', passwordConfirmation = 'any_password' }: { name?: string, email?: string, password?: string, passwordConfirmation?: string }): HttpRequest => {
   return {
