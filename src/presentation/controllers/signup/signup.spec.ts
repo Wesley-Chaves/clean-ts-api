@@ -1,9 +1,10 @@
+import { HttpRequest } from '../../protocols'
 import { EmailValidator } from '../../protocols/emailValidator'
 import { InvalidParamError, MissingParamError } from '../errors'
 import { badRequest, serverError } from '../helpers/http-helper'
 import { SignUpController } from './signup'
 
-const makeFakeRequest = (): any => ({
+const makeFakeRequest = (): HttpRequest => ({
   body: {
     name: 'any_name',
     email: 'any_email@mail.com',
