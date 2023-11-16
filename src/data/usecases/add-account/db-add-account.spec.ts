@@ -25,15 +25,16 @@ const makeSut = (): SutTypes => {
   }
 }
 
+const accountData = {
+  name: 'any_name',
+  email: 'any_email@mail.com',
+  password: 'any_password'
+}
+
 describe('DbAddAccount Usecase', () => {
   test('Should call encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
-    const accountData = {
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password'
-    }
     await sut.add(accountData)
     expect(encryptSpy).toHaveBeenCalledWith('any_password')
   })
