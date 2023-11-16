@@ -3,7 +3,12 @@ import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest } from '../helpers/http-helper'
 import { SignUpController } from './signup'
 
-const makeEmailValidator = (): any => {
+interface SutTypes {
+  sut: SignUpController
+  emailValidatorStub: EmailValidator
+}
+
+const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     async isValid (email: string): Promise<boolean> {
       return await new Promise((resolve) => { resolve(true) })
@@ -12,7 +17,7 @@ const makeEmailValidator = (): any => {
   return new EmailValidatorStub()
 }
 
-const makeSut = (): any => {
+const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
   const sut = new SignUpController(emailValidatorStub)
   return {
