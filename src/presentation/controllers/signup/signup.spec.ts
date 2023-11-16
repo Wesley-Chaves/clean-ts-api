@@ -12,9 +12,9 @@ const makeFakeRequest = ({ name = 'any_name', email = 'any_email@mail.com', pass
 
 const fakeAccount = {
   id: 'valid_id',
-  name: 'any_name',
-  email: 'any_email@mail.com',
-  password: 'any_password'
+  name: 'valid_name',
+  email: 'valid_email@mail.com',
+  password: 'valid_password'
 }
 
 const makeAddAccount = (): AddAccount => {
@@ -150,5 +150,12 @@ describe('SignUp Controller', () => {
     }))
     const httpResponse = await sut.handle(makeFakeRequest({}))
     expect(httpResponse).toEqual(serverError())
+  })
+
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest({}))
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual(fakeAccount)
   })
 })
