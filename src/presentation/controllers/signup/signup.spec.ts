@@ -1,9 +1,10 @@
+import { EmailValidator } from '../../protocols/emailValidator'
 import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest } from '../helpers/http-helper'
 import { SignUpController } from './signup'
 
 const makeEmailValidator = (): any => {
-  class EmailValidatorStub {
+  class EmailValidatorStub implements EmailValidator {
     async isValid (email: string): Promise<boolean> {
       return await new Promise((resolve) => { resolve(true) })
     }
