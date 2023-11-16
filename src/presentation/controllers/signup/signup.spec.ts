@@ -17,7 +17,7 @@ const fakeAccount = {
   password: 'any_password'
 }
 
-const makeDbAddAccount = (): AddAccount => {
+const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (accountData: AddAccountModel): Promise<Account> {
       return await new Promise((resolve) => { resolve(fakeAccount) })
@@ -43,7 +43,7 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
-  const addAccountStub = makeDbAddAccount()
+  const addAccountStub = makeAddAccount()
   const sut = new SignUpController(emailValidatorStub, addAccountStub)
   return {
     sut,
