@@ -1,6 +1,7 @@
 import { Controller } from '../../protocols/controller'
 import { EmailValidator } from '../../protocols/emailValidator'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { InvalidParamError } from '../errors/invalid-param-error'
 import { MissingParamError } from '../errors/missing-param-error'
 import { badRequest, serverError } from '../helpers/http-helper'
 
@@ -20,7 +21,7 @@ export class SignUpController implements Controller {
 
       const { email } = httpRequest.body
       const isValid = await this.emailValidator.isValid(email)
-      if (!isValid) return badRequest(new Error('Invalid param: email'))
+      if (!isValid) return badRequest(new InvalidParamError('email'))
     } catch (error) {
       return serverError()
     }
