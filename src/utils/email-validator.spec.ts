@@ -3,7 +3,7 @@ import validator from 'validator'
 
 jest.mock('validator', () => {
   return {
-    isEmail () {
+    isEmail (): boolean {
       return true
     }
   }
@@ -15,5 +15,11 @@ describe('EmailValidator', () => {
     jest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)
     const isValid = await sut.isValid('any_email@mail.com')
     expect(isValid).toBe(false)
+  })
+
+  test('Should return true if validator returns true', async () => {
+    const sut = new EmailValidatorAdapter()
+    const isValid = await sut.isValid('any_email@mail.com')
+    expect(isValid).toBe(true)
   })
 })
