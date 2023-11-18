@@ -19,13 +19,23 @@ const makeControllerStub = (): Controller => {
   return new ControllerStub()
 }
 
-const makeSut = (): LogControllerDecorator => {
-  return new LogControllerDecorator(makeControllerStub())
+interface SutTypes {
+  sut: LogControllerDecorator
+  controllerStub: Controller
+}
+
+const makeSut = (): SutTypes => {
+  const controllerStub = makeControllerStub()
+  const sut = new LogControllerDecorator(controllerStub)
+  return {
+    sut,
+    controllerStub
+  }
 }
 
 describe('LogController Decorator', () => {
   test('Should return controller.handle', async () => {
-    const sut = makeSut()
+    const { sut } = makeSut()
     const httpRequest = {
       body: {
         name: 'any_name',
