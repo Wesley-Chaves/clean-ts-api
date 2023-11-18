@@ -10,6 +10,9 @@ const makeFakeRequest = ({ name = 'any_name', email = 'any_email@mail.com', pass
   }
 }
 
+const generetedError = new Error()
+generetedError.stack = 'any_stack'
+
 const fakeAccount = {
   id: 'valid_id',
   name: 'valid_name',
@@ -123,7 +126,7 @@ describe('SignUp Controller', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
     const httpResponse = await sut.handle(makeFakeRequest({}))
-    expect(httpResponse).toEqual(serverError())
+    expect(httpResponse).toEqual(serverError(generetedError))
   })
 
   test('Should return 400 if passwords don\'t match', async () => {
@@ -149,7 +152,7 @@ describe('SignUp Controller', () => {
       reject(new Error())
     }))
     const httpResponse = await sut.handle(makeFakeRequest({}))
-    expect(httpResponse).toEqual(serverError())
+    expect(httpResponse).toEqual(serverError(generetedError))
   })
 
   test('Should return 200 if valid data is provided', async () => {
