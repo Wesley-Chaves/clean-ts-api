@@ -4,6 +4,10 @@ import { LogMongoRepository } from './log'
 const generatedError = new Error()
 generatedError.stack = 'any_stack'
 
+const makeSut = (): LogMongoRepository => {
+  return new LogMongoRepository()
+}
+
 describe('Log Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect('mongodb://localhost:27017/clean-node-api')
@@ -20,7 +24,7 @@ describe('Log Mongo Repository', () => {
   })
 
   test('Should create an error log on success', async () => {
-    const sut = new LogMongoRepository()
+    const sut = makeSut()
     await sut.logError(generatedError.stack)
     const errorsCollection = await MongoHelper.getCollection('errors')
     const count = await errorsCollection.countDocuments()
