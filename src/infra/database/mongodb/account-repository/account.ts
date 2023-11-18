@@ -3,7 +3,7 @@ import { AccountRepository, AddAccountModelRepository, AddAccountRepository } fr
 
 export class AccountMongoRepository implements AddAccountRepository {
   async add (accountData: AddAccountModelRepository): Promise<AccountRepository> {
-    const accountsCollection = MongoHelper.client.db().collection('accounts')
+    const accountsCollection = await MongoHelper.getCollection('accounts')
     const result = await accountsCollection.insertOne(accountData)
     const findResult = await accountsCollection.findOne({ _id: result.insertedId })
     return MongoHelper.map(findResult)
