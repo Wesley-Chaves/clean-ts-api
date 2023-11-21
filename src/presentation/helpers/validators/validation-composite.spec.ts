@@ -54,4 +54,10 @@ describe('Validation Composite', () => {
     const error = await sut.validate(makeFakeRequest().body)
     expect(error).toEqual(new Error())
   })
+
+  test('Should not return if validation pass', async () => {
+    const { sut } = makeSut()
+    const error = await sut.validate(makeFakeRequest().body)
+    expect(error).toBeFalsy()
+  })
 })
