@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Email Validation', () => {
-  test('Should return 400 if EmailValidator returns false', async () => {
+  test('Should return InvalidParamError if validation fails', async () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(new Promise((resolve) => { resolve(false) }))
     const error = await sut.validate(makeFakeRequest({}).body)
@@ -46,10 +46,16 @@ describe('Email Validation', () => {
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
 
-  test('Should return 500 if EmailValidator throws', async () => {
+  test('Should throws if EmailValidator throws', async () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
     const promise = sut.validate(makeFakeRequest({}).body)
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should not return if validation pass', async () => {
+    const { sut } = makeSut()
+    const error = await sut.validate(makeFakeRequest({}).body)
+    expect(error).toBeFalsy()
   })
 })
