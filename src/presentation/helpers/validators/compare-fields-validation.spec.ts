@@ -1,16 +1,20 @@
 import { InvalidParamError } from '../../errors'
 import { CompareFieldsValidation } from './compare-fields-validation'
 
+const makeSut = (): CompareFieldsValidation => {
+  return new CompareFieldsValidation('field', 'fieldToCompare')
+}
+
 describe('CompareFields Validation', () => {
   test('Should return InvalidParamError if validation fails', async () => {
-    const sut = new CompareFieldsValidation('password', 'passwordConfirmation')
-    const error = await sut.validate({ password: 'valid_password', passwordConfirmation: 'invalid_confirmation' })
-    expect(error).toEqual(new InvalidParamError('passwordConfirmation'))
+    const sut = makeSut()
+    const error = await sut.validate({ field: 'any_value', fieldToCompare: 'other_value' })
+    expect(error).toEqual(new InvalidParamError('fieldToCompare'))
   })
 
   test('Should not return if validation pass', async () => {
-    const sut = new CompareFieldsValidation('password', 'passwordConfirmation')
-    const error = await sut.validate({ password: 'valid_password', passwordConfirmation: 'valid_password' })
+    const sut = makeSut()
+    const error = await sut.validate({ field: 'any_value', fieldToCompare: 'any_value' })
     expect(error).toBeFalsy()
   })
 })
