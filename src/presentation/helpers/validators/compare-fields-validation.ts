@@ -10,7 +10,7 @@ export class CompareFieldsValidation implements Validation {
     this.fieldNameToCompare = fieldNameToCompare
   }
 
-  validate (input: any): Error {
+  async validate (input: any): Promise<Error> {
     if (input[this.fieldName] !== input[this.fieldNameToCompare]) {
       return new InvalidParamError(this.fieldNameToCompare)
     }
