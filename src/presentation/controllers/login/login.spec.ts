@@ -34,6 +34,7 @@ const makeValidation = (): Validation => {
 interface SutTypes {
   sut: LoginController
   authenticationStub: Authentication
+  validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
@@ -43,7 +44,8 @@ const makeSut = (): SutTypes => {
 
   return {
     sut,
-    authenticationStub
+    authenticationStub,
+    validationStub
   }
 }
 
@@ -84,5 +86,12 @@ describe('Login Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(sucess({ accessToken: 'any_token' }))
+  })
+
+  test('Should return 400 if validation returns an error', async () => {
+    const { sut, validationStub } = makeSut()
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Promise((resolve) => { resolve(new Error()) }))
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(badRequest(new Error()))
   })
 })
