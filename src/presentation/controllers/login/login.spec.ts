@@ -1,4 +1,3 @@
-import { MissingParamError } from '../../errors'
 import { badRequest, serverError, sucess, unauthorized } from '../../helpers/http-helper'
 import { Authentication, HttpRequest } from './login-protocols'
 import { LoginController } from './login'
@@ -50,17 +49,6 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Login Controller', () => {
-  test('Should returns 400 if no password is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        email: 'any_email@mail.com'
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
-  })
-
   test('Should call Authentication with correct valeus', async () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = jest.spyOn(authenticationStub, 'auth')

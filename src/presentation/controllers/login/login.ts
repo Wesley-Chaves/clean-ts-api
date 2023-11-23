@@ -1,4 +1,3 @@
-import { MissingParamError } from '../../errors'
 import { badRequest, serverError, sucess, unauthorized } from '../../helpers/http-helper'
 import { Validation } from '../signup/signup-protocols'
 import { Authentication, Controller, HttpRequest, HttpResponse }
@@ -18,11 +17,6 @@ export class LoginController implements Controller {
       const error = await this.validation.validate(httpRequest.body)
       if (error) {
         return badRequest(error)
-      }
-
-      const requiredFields = ['email', 'password']
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) return badRequest(new MissingParamError(field))
       }
 
       const { email, password } = httpRequest.body
