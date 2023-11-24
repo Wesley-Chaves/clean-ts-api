@@ -1,6 +1,3 @@
-export interface Account {
-  id: string
-  name: string
-  email: string
-  password: string
-}
+import { Account } from '../../domain/entities/'
+
+export type AccountModel = Account

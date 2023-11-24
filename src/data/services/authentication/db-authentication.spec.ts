@@ -1,5 +1,5 @@
 import { Account } from '../../../domain/entities/account'
-import { LoadAccountByEmailRepository } from '../../protocols/load-account-by-email-repository'
+import { LoadAccountByEmailRepository } from '../../protocols/repositories/'
 import { DbAuthentication } from './db-authentication'
 
 const fakeAccount: Account = {
