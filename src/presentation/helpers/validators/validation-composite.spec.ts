@@ -1,6 +1,6 @@
 import { MissingParamError } from '../../errors'
 import { HttpRequest } from '../../protocols'
-import { Validation } from './validation'
+import { Validation } from '../../protocols/validation'
 import { ValidationComposite } from './validation-composite'
 
 const makeFakeRequest = (): HttpRequest => ({
