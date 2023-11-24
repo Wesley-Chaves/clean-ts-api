@@ -1,6 +1,7 @@
 import { InvalidParamError } from '../../errors'
-import { HttpRequest, EmailValidator } from '../../controllers/signup/signup-protocols'
+import { HttpRequest } from '../../protocols'
 import { EmailValidation } from './email-validation'
+import { EmailValidator } from '../../protocols/emailValidator'
 
 const makeFakeRequest = ({ name = 'any_name', email = 'any_email@mail.com', password = 'any_password', passwordConfirmation = 'any_password' }: { name?: string, email?: string, password?: string, passwordConfirmation?: string }): HttpRequest => {
   return {
@@ -32,7 +33,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Email Validation', () => {
-  test('Should return InvalidParamError if validation fails', async () => {
+  test('Should return an error if validation fails', async () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(new Promise((resolve) => { resolve(false) }))
     const error = await sut.validate(makeFakeRequest({}).body)
