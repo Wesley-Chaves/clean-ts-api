@@ -1,5 +1,6 @@
-import { Encrypter, AddAccountRepository, AddAccountModelRepository, Account } from './db-add-account-protocols'
 import { DbAddAccount } from './db-add-account'
+import { Encrypter, AddAccountRepository, AddAccountModelRepository } from './db-add-account-protocols'
+import { Account } from '../../../domain/entities'
 
 const accountData = {
   name: 'any_name',
