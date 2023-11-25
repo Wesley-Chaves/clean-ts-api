@@ -1,2 +1,2 @@
 export * from '../../protocols/repositories/add-account'
-export * from '../../protocols/criptography/encrypter'
+export * from '../../protocols/criptography/hasher'
