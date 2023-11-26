@@ -15,6 +15,12 @@ describe('Jwt Adapter', () => {
     expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
   })
 
+  test('Should return an accessToken on success', async () => {
+    const sut = new JwtAdapter('secret')
+    const accessToken = await sut.encrypt('secret')
+    expect(accessToken).toBe('accessToken')
+  })
+
   test('Should throw if Jwt throws', async () => {
     const sut = new JwtAdapter('secret')
     jest.spyOn(jwt, 'sign').mockImplementationOnce(async () => {
