@@ -1,5 +1,5 @@
-import { DbAuthentication } from './db-authentication'
-import { LoadAccountByEmailRepository, UpdateAccessTokenRepository, Encrypter, HashComparer } from './db-authentication-protocols'
+import { DbAuthenticationService } from './db-authentication-service'
+import { LoadAccountByEmailRepository, UpdateAccessTokenRepository, Encrypter, HashComparer } from './db-authentication-service-protocols'
 import { Account } from '../../../domain/entities/account'
 import { AuthenticationModel } from '../../../domain/usecases'
 
@@ -50,7 +50,7 @@ const makeUpdateAccessTokenRepository = (): UpdateAccessTokenRepository => {
 }
 
 interface SutTypes {
-  sut: DbAuthentication
+  sut: DbAuthenticationService
   loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
   hashComparerStub: HashComparer
   encrypterStub: Encrypter
@@ -63,7 +63,7 @@ const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter()
   const updateAccessTokenRepositoryStub = makeUpdateAccessTokenRepository()
 
-  const sut = new DbAuthentication(
+  const sut = new DbAuthenticationService(
     loadAccountByEmailRepositoryStub,
     hashComparerStub,
     encrypterStub,
@@ -78,7 +78,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbAuthentication Usecase', () => {
+describe('DbAuthentication Service', () => {
   test('Should call LoadAccountByEmailRepository with correct email', async () => {
     const { sut, loadAccountByEmailRepositoryStub } = makeSut()
     const loadByEmailSpy = jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail')

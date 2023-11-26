@@ -1,5 +1,5 @@
-import { DbAddAccount } from './db-add-account'
-import { Hasher, AddAccountRepository, AddAccountModelRepository } from './db-add-account-protocols'
+import { DbAddAccountService } from './db-add-account-service'
+import { Hasher, AddAccountRepository, AddAccountModelRepository } from './db-add-account-service-protocols'
 import { Account } from '../../../domain/entities'
 
 const accountData = {
@@ -34,7 +34,7 @@ const makeAddAccountRepositoryStub = (): AddAccountRepository => {
 }
 
 interface SutTypes {
-  sut: DbAddAccount
+  sut: DbAddAccountService
   hasherStub: Hasher
   addAccountRepositoryStub: AddAccountRepository
 }
@@ -42,7 +42,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const hasherStub = makeHasherStub()
   const addAccountRepositoryStub = makeAddAccountRepositoryStub()
-  const sut = new DbAddAccount(hasherStub, addAccountRepositoryStub)
+  const sut = new DbAddAccountService(hasherStub, addAccountRepositoryStub)
 
   return {
     sut,
@@ -51,7 +51,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('DbAddAccount Usecase', () => {
+describe('DbAddAccount Service', () => {
   test('Should call Hasher with correct password', async () => {
     const { sut, hasherStub } = makeSut()
     const hashSpy = jest.spyOn(hasherStub, 'hash')

@@ -1,7 +1,7 @@
-import { LoadAccountByEmailRepository, UpdateAccessTokenRepository, Encrypter, HashComparer } from './db-authentication-protocols'
+import { LoadAccountByEmailRepository, UpdateAccessTokenRepository, Encrypter, HashComparer } from './db-authentication-service-protocols'
 import { Authentication, AuthenticationModel } from '../../../domain/usecases/authentication'
 
-export class DbAuthentication implements Authentication {
+export class DbAuthenticationService implements Authentication {
   constructor (
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository,
     private readonly hashComparer: HashComparer,

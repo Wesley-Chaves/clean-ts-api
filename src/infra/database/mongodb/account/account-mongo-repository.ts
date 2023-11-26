@@ -1,5 +1,5 @@
 import { MongoHelper } from '../helpers/mongo-helper'
-import { AddAccountRepository, AddAccountModelRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '../../../../data/protocols/repositories/'
+import { AddAccountRepository, AddAccountModelRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '../../../../data/protocols/database/account/'
 import { AccountModel } from '../../../../data/models'
 import { Account } from '../../../../domain/entities'
 import { ObjectId } from 'mongodb'
