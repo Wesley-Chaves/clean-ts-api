@@ -24,6 +24,7 @@ export const MongoHelper = {
   },
 
   map (data: any): any {
+    if (!data) return null
     const { _id, ...objWithoutId } = data
     return Object.assign({}, { id: _id }, objWithoutId)
   }
